@@ -8,15 +8,8 @@
 // You can download the library from:
 // https://github.com/exscape/electronics/tree/master/Arduino/Libraries/DAC_MCP49xx
 //
-// You will also need to include the Joystick
-// library if you want to use a Arduino Micro (or clone)
-// to give you passthrough to PC joystick support.
-// You can download the library from:
-// https://github.com/MHeironimus/ArduinoJoystickLibrary
-#ifdef __AVR___
 #include <avr/wdt.h>
-#endif
-#include <SPI.h>         // Remember this line!
+#include <SPI.h>
 #include "DAC_MCP49xx.h"
 #include "PS2Mouse.h"
 
@@ -85,9 +78,7 @@ void setup(void) {
   // Here we enable the watchdog system and set it it to 1 second.
   // This should help keep the system resetting till the PS/2 Mouse
   // is ready to be setup.
-  #ifdef __AVR___
   wdt_enable(WDTO_1S);
-  #endif
   //pinMode(PCBLED, OUTPUT);
   JoyPass1=0;
   //digitalWrite(PCBLED, LOW);
@@ -115,9 +106,7 @@ void setup(void) {
 }
 
 void loop (void) {
-  #ifdef __AVR___
   wdt_reset();
-  #endif
   MouseData data = mouse.readData();
   MButtons = data.status & 3;
   MMButton = data.status & 4;
